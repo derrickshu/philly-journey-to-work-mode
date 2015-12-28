@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Philadelphia Mode Share Dot Density</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <link rel="shortcut icon" href="http://cartodb.com/assets/favicon.ico" />
+    <style>
+      html, body, #map {
+        height: 100%;
+        padding: 0;
+        margin: 0;
+      }
+    </style>
+    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" />
+  </head>
+  <body>
+    <div id="map"></div>
+    
+    <!-- include cartodb.js library -->
+    <script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
+
+    <script>
+      function main() {
+
+        var map = new L.Map('map', {
+          zoomControl: true,
+          center: [39.98, -75.18],
+          zoom: 13
+        });
+
+        var sql = new cartodb.SQL({ user: 'azavea', format: 'geojson' });
+        var polygon;
+
+        function showFeature(cartodb_id) {
+          sql.execute("select the_geom from phila_bg_clipped_mode_share where cartodb_id = {{cartodb_id}}", {cartodb_id: cartodb_id} ).done(function(geojson) {
+            if (polygon) {
+              map.removeLayer(polygon);
+            }
+            polygon = L.geoJson(geojson, { 
+              style: {
+                color: "#FDF8FF",
+                fillColor: "#fff",
+                weight: 4,
+                opacity: 0.65
+              }
+            }).addTo(map);
+          });
+        }
+
+        L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
+          attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>n'
+        }).addTo(map);
+
+        cartodb.createLayer(map, 'https://azavea-maps.cartodb.com/u/azavea/api/v2/viz/c9ec900e-a9b0-11e5-88c3-0ecfd53eb7d3/viz.json', { infowindow: true })
+         .addTo(map)
+         .on('done', function(layer) {
+
+          layer.setInteraction(true);
+
+          layer.on('featureClick', function(e, pos, latlng, data) {
+            showFeature(data.cartodb_id)
+          });
+
+        }).on('error', function() {
+          cartodb.log.log("some error occurred");
+        });
+      }
+      window.onload = main;
+    </script>
+  </body>
+</html>
