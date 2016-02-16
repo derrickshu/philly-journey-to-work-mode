@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Philadelphia Mode Share Dot Density</title>
+    <title>Philadelphia Journey to Work</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
     <link rel="shortcut icon" href="http://cartodb.com/assets/favicon.ico" />
@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" />
   </head>
   <body>
+    <div id="title"><h2 style="font-family: arial; background: #000000; color: white; padding-left:6px; padding-bottom:6px; padding-top: 6px; border-bottom: 1px white dotted;">Philadelphia Journey to Work</h2></div>
     <div id="map"></div>
     
     <!-- include cartodb.js library -->
@@ -25,7 +26,7 @@
 
         var map = new L.Map('map', {
           zoomControl: true,
-          center: [39.98, -75.18],
+          center: [39.4, -75.18],
           zoom: 13
         });
 
