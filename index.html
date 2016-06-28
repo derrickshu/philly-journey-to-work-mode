@@ -53,7 +53,7 @@
           attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>n'
         }).addTo(map);
 
-        cartodb.createLayer(map, 'https://azavea-maps.cartodb.com/u/azavea/api/v2/viz/c9ec900e-a9b0-11e5-88c3-0ecfd53eb7d3/viz.json', { infowindow: true })
+        cartodb.createLayer(map, 'https://azavea-maps.cartodb.com/u/azavea/api/v2/viz/c9ec900e-a9b0-11e5-88c3-0ecfd53eb7d3/viz.json', { infowindow: true, https: true })
          .addTo(map)
          .on('done', function(layer) {
 
